@@ -1,0 +1,38 @@
+--Box2d--
+Créer les plateformes
+Créer le carré qui saute
+Créer une gestion des objets (classe gérant plateforme et carré)
+
+-- Mechaniques --
+Gérer la gravité
+Gérer les collisions entre plateforme et carré
+Gère le saut et la gravité
+Faire en sorte que le carré ne saute pas quand il est en l'air
+Gestion des inputs (déplacement du carré)
+
+
+
+
+-> Sprite et textures -- -> Vars decides pour le projet
+Taille du carré : 50x50
+Taille du sol : 64x64
+Taille de la fenêtre : 800x600
+Disposition : Grille 15 large x 10 haut -> Json
+
+Formattage txt
+> ... -> Thi/Duncan = Tache attribuée
+<ok> ... = Tache terminée
+// = Tache mis en pause
+
+Formattage code / Convention de nommage 
+Variable = ma_var
+Fonctions = maFonction
+Constantes : MA_CONST
+Enum, Struct, Class = MonEnum
+
+Commentaires fonctions
+// Desc : La description de la fonction
+// /args :
+//  - monArgument1 : Prend ceci
+//  - monArgument2 : Prend cela
+// /return : le résultat

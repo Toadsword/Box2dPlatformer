@@ -27,13 +27,19 @@ int main()
 
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
 	window.setFramerateLimit(60.f);
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color(2, 56, 37));
+	sf::RectangleShape square (sf::Vector2f(50,50));
+	square.setFillColor(sf::Color(2, 56, 37));
+	
 	b2BodyDef myBodyDef;
 	myBodyDef.type = b2_dynamicBody; //this will be a dynamic body
 	myBodyDef.position.Set(0, 0); //set the starting position
 	b2Body* dynamicBody = myWorld->CreateBody(&myBodyDef);
-
+	b2PolygonShape shape;
+	shape.SetAsBox(0.7, 0.7);
+	b2FixtureDef boxFixtureDef;
+	boxFixtureDef.shape = &shape;
+	boxFixtureDef.density = 1;
+	dynamicBody->CreateFixture(&boxFixtureDef);
 	float32 timeStep = 1 / 60.0;      //the length of time passed to simulate (seconds)
 	int32 velocityIterations = 8;   //how strongly to correct velocity
 	int32 positionIterations = 3;   //how strongly to correct position
@@ -59,11 +65,11 @@ int main()
 		}
 		
 
-		shape.setPosition(dynamicBody->GetPosition().x, dynamicBody->GetPosition().y);
+		square.setPosition(dynamicBody->GetPosition().x, dynamicBody->GetPosition().y);
 
 		window.clear();
 
-		window.draw(shape);
+		window.draw(square);
 		
 		window.display();
 	}

@@ -1,7 +1,7 @@
 --Box2d--
-Créer les plateformes
+>Duncan< Créer les plateformes
 Créer le carré qui saute
-Créer une gestion des objets (classe gérant plateforme et carré)
+>Duncan< Créer une gestion des objets (classe gérant plateforme et carré)
 
 -- Mechaniques --
 Gérer la gravité

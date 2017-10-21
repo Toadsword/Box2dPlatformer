@@ -15,6 +15,11 @@
 
 using json = nlohmann::json;
 
+enum TILES_TYPES 
+{
+	AIR,
+	GROUND
+};
 
 // - meter2pixel
 // Description : Converti les pixels de SFML en mètres de Box2d
@@ -36,28 +41,44 @@ b2Vec2 pixel2meter(sf::Vector2f pixels)
 	return b2Vec2(pixels.x / PIXEL_METER_RATIO, pixels.y / PIXEL_METER_RATIO);
 }
 
-sf::Texture loadTexture(std::string textureName)
+// - loadTexture
+// Description : Charge une texture donnée en paramètre dans la mémoire
+// Args :
+//		imageName : Nom de l'image
+// Return : Le pointeur de la texture
+sf::Texture* loadTexture(std::string imageName)
 {
-	sf::Texture texture;
-	if (!texture.loadFromFile(FOLDER_IMG + textureName))
+	sf::Texture* texture = new sf::Texture();
+	if (!texture->loadFromFile(FOLDER_IMG + imageName))
 	{
-		std::cerr << "Unable to load image (" << textureName << ")";
+		std::cerr << "Unable to load image (" << imageName << ")";
 	}
 	return texture;
 }
 
-void loadAllTextures(std::map<std::string, sf::Texture>& textureList)
+// - loadAllTextures
+// Description : Charge toutes les textures voulus et le stock dans une liste de textures
+// Args :
+//		imageName : textureList Liste de textures à agrémenter
+void loadAllTextures(std::map<std::string, sf::Texture*>& textureList)
 {
-	textureList["grass"] = loadTexture("data/img/grass.png");
+	textureList["grass"] = loadTexture("grass.png");
 }
 
-void createWorldTiles(b2World* world, json mapData, std::list<objectManager*>& objectList, std::map<std::string, sf::Texture>& textureList)
+// - createWorldTiles
+// Description : Crée la carte du jeu, et stock les tuiles dans une liste
+// Args :
+//		world : Monde Box2D dans lequel on va créer les tuiles
+//		mapData : Données json sur comment doit être créé la carte
+//		objectList : Liste où sera stocké les tuiles de la carte
+//		textureList : Liste des textures, qui viendra utilisé pour les tuiles
+void createWorldTiles(b2World* world, json mapData, std::list<objectManager*>& objectList, std::map<std::string, sf::Texture*>& textureList)
 {
 	for (int height = 0; height < mapData.size(); height++)
 	{
 		for (int width = 0; width < mapData[height].size(); width++)
 		{
-			if (mapData[height][width] == 1)
+			if (mapData[height][width] == GROUND)
 			{
 				sf::Vector2f position = meter2pixel(b2Vec2(width, height));
 				sf::RectangleShape square(position);
@@ -67,14 +88,15 @@ void createWorldTiles(b2World* world, json mapData, std::list<objectManager*>& o
 				myBodyDef.type = b2_staticBody; //this will be a dynamic body
 				myBodyDef.position.Set(width, height); //set the starting position
 				b2Body* staticBody = world->CreateBody(&myBodyDef);
+				/*
 				b2PolygonShape shape;
 				shape.SetAsBox(0.7, 0.7);
 				b2FixtureDef boxFixtureDef;
 				boxFixtureDef.shape = &shape;
-				boxFixtureDef.density = 10;
+				boxFixtureDef.density = 1;
 				staticBody->CreateFixture(&boxFixtureDef);
-				
-				objectManager* object = new objectManager(position, &textureList["grass"], staticBody);
+				*/
+				objectManager* object = new objectManager(position, textureList["grass"], staticBody);
 				objectList.push_front(object);
 				std::cout << height << " " << width << "\n";
 			}
@@ -82,6 +104,11 @@ void createWorldTiles(b2World* world, json mapData, std::list<objectManager*>& o
 	}
 }
 
+// - displayMap
+// Description : Affiche la carte à l'écran
+// Args :
+//		window : Ecran du jeu
+//		map : Carte du jeu
 void displayMap(sf::RenderWindow& window, std::list<objectManager*>& map)
 {
 	for (auto it = map.begin(); it != map.end(); it++)
@@ -102,19 +129,20 @@ int main()
 		return EXIT_FAILURE;
 	}
 
-	std::list<objectManager*> worldMap;
-	std::map<std::string, sf::Texture> textureList;
+	std::map<std::string, sf::Texture*> textureList;
+	loadAllTextures(textureList);
+
 	b2Vec2 gravity(0, 9.8); //normal earth gravity, 9.8 m/s/s straight down!
 
 	b2World* myWorld = new b2World(gravity);
 
+	std::list<objectManager*> worldMap;
 	createWorldTiles(myWorld, data["level"], worldMap, textureList);
 
 	sf::RenderWindow window(sf::VideoMode(data["windows"]["width"], data["windows"]["height"]), "SFML works!");
 	window.setFramerateLimit(60.f);
 	sf::RectangleShape square (sf::Vector2f(50,50));
-	square.setTexture(&textureList["grass"]);
-	//square.setFillColor(sf::Color(2, 56, 37));
+	square.setFillColor(sf::Color(2, 56, 37));
 	
 	b2BodyDef myBodyDef;
 	myBodyDef.type = b2_dynamicBody; //this will be a dynamic body
@@ -124,13 +152,17 @@ int main()
 	shape.SetAsBox(0.7, 0.7);
 	b2FixtureDef boxFixtureDef;
 	boxFixtureDef.shape = &shape;
-	boxFixtureDef.density = 10;
+	boxFixtureDef.density = 1;
 	dynamicBody->CreateFixture(&boxFixtureDef);
 
 	float32 timeStep = 1 / 60.0;      //the length of time passed to simulate (seconds)
 	int32 velocityIterations = 8;   //how strongly to correct velocity
-	int32 positionIterations = 80;   //how strongly to correct position
+	int32 positionIterations = 3;   //how strongly to correct position
 
+	for (auto it = worldMap.begin(); it != worldMap.end(); it++)
+	{
+		std::cout << (*it)->getSprite()->getPosition().x << " " << (*it)->getSprite()->getPosition().y << "\n";
+	}
 
 	float speed = 5.0f;
 	while (window.isOpen())

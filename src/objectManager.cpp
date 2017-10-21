@@ -2,7 +2,7 @@
 
 objectManager::objectManager(sf::Vector2f position, sf::Texture* texture, b2Body* body) : position(position), texture(texture), body(body)
 {
-	sprite.setTexture(*this->texture);
+	sprite.setTexture(*texture);
 	sprite.setPosition(position);
 }
 

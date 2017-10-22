@@ -47,7 +47,7 @@ int main()
 	sf::RectangleShape square(sf::Vector2f(50, 50));
 	square.setFillColor(sf::Color::Blue);
 
-	myWorld->addEntity(b2Vec2(1, 2), textureList["slime"], b2_dynamicBody);
+	b2Body* character = myWorld->addEntity(b2Vec2(1, 2), textureList["slime"], b2_dynamicBody);
 	float speed = 5.0f;
 	while (window.isOpen())
 	{

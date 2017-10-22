@@ -36,7 +36,7 @@ public:
 
 	void step();
 	void draw(sf::RenderWindow&);
-	void addEntity(b2Vec2, sf::Texture*, b2BodyType = b2_staticBody);
+	b2Body* addEntity(b2Vec2, sf::Texture*, b2BodyType = b2_staticBody);
 	bool createWorldTiles(json mapData, std::map<std::string, sf::Texture*>& textureList);
 
 	static b2Vec2 pixel2meter(sf::Vector2f);

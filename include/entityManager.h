@@ -17,7 +17,7 @@ public:
 	EntityManager();
 	~EntityManager();
 	void draw(sf::RenderWindow&);
-	void addEntity(b2Vec2, sf::Texture*, b2BodyType, b2World&);
+	b2Body* addEntity(b2Vec2, sf::Texture*, b2BodyType, b2World&);
 };
 
 #endif //!ENTITY_MANAGER_H

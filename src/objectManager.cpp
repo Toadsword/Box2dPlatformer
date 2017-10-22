@@ -58,6 +58,13 @@ void objectManager::keyboard(unsigned char key)
 		vel.y = 10;
 		body->SetLinearVelocity(vel);
 		break;
+	//case 'w':utilise methode impusle
+	//{
+	//	//to change velocity by 10
+	//	float impulse = body->GetMass() * 10;
+	//	body->ApplyLinearImpulse(b2Vec2(0, impulse), body->GetWorldCenter());
+	//}
+	//break;
 	}
 
 

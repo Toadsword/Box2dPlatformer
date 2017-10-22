@@ -69,3 +69,21 @@ void objectManager::keyboard(unsigned char key)
 
 
 }
+
+void objectManager::BeginContact(b2Contact *contact)
+{
+	//check if fixture A was the foot sensor
+	void* fixtureUserData = contact->GetFixtureA()->GetUserData();
+	if ((int)fixtureUserData == 3)
+		numFootContacts++;
+	
+}
+
+void objectManager::EndContact(b2Contact *contact)
+{
+
+	//check if fixture A was the foot sensor
+	void* fixtureUserData = contact->GetFixtureA()->GetUserData();
+	if ((int)fixtureUserData == 3)
+		numFootContacts--;
+}

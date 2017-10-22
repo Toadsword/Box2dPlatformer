@@ -19,6 +19,7 @@ enum TILES_TYPES
 };
 
 class EntityManager;
+class Entity;
 
 class World 
 {
@@ -36,7 +37,7 @@ public:
 
 	void step();
 	void draw(sf::RenderWindow&);
-	b2Body* addEntity(b2Vec2, sf::Texture*, b2BodyType = b2_staticBody);
+	Entity addEntity(b2Vec2, sf::Texture*, b2BodyType = b2_staticBody);
 	bool createWorldTiles(json mapData, std::map<std::string, sf::Texture*>& textureList);
 
 	static b2Vec2 pixel2meter(sf::Vector2f);

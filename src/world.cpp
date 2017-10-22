@@ -26,7 +26,7 @@ void World::draw(sf::RenderWindow& window)
 	entitiesManager->draw(window);
 }
 
-b2Body* World::addEntity(b2Vec2 position, sf::Texture* texture, b2BodyType bodyType)
+Entity World::addEntity(b2Vec2 position, sf::Texture* texture, b2BodyType bodyType)
 {
 	return entitiesManager->addEntity(position, texture, bodyType, *world);
 }

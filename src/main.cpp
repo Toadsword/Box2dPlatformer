@@ -20,12 +20,7 @@ enum TILES_TYPES
 	AIR,
 	GROUND
 };
-enum MOVE_STATE
-{
-	LEFT,
-	RIGHT
-	//UP
-};
+
 
 // - meter2pixel
 // Description : Converti les pixels de SFML en mètres de Box2d
@@ -136,7 +131,7 @@ int main()
 		system("pause");
 		return EXIT_FAILURE;
 	}
-	//unsigned char key;
+	
 	std::map<std::string, sf::Texture*> textureList;
 	loadAllTextures(textureList);
 
@@ -174,7 +169,7 @@ int main()
 		std::cout << (*it)->getSprite()->getPosition().x << " " << (*it)->getSprite()->getPosition().y << "\n";
 	}
 
-	//keyboard(key);
+	
 	float speed = 5.0f;
 	while (window.isOpen())
 	{
@@ -195,11 +190,11 @@ int main()
 		sf::Vector2f square_move;
 		
 		//manage input pour bouger le carre SFML
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			square_move.x -= 1.0f;
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		{
 			square_move.x += 1.0f;
 		}

@@ -12,17 +12,16 @@
 #include "entityManager.h"
 #include "textureManager.h"
 
-#define PIXEL_METER_RATIO 1.f/64.f
+#define PIXEL_METER_RATIO 1.f / 64.f
 #define WORLD_TIME_STEP 1.f / 60.0f
 #define WORLD_VELOCITY_IT 8
 #define WORLD_POSITION_IT 3
 
 using json = nlohmann::json;
 
-
 int main()
 {
-	// Reading the json file
+	// Reading Json File
 	std::ifstream ifs("data/elements.json");
 	json data;
 	if (ifs.is_open())
@@ -34,44 +33,39 @@ int main()
 		return EXIT_FAILURE;
 	}
 	
-	
+	// Load textures 
 	std::map<std::string, sf::Texture*> textureList;
 	loadAllTextures(textureList);
 
+	// Creating the world
 	b2Vec2 gravity(0, 9.8); //normal earth gravity, 9.8 m/s/s straight down!
-
 	World* myWorld = new World(gravity, PIXEL_METER_RATIO, WORLD_TIME_STEP, WORLD_VELOCITY_IT, WORLD_POSITION_IT);
-
 	myWorld->createWorldTiles(data["level"], textureList);
 
+	// Creating main window
 	sf::RenderWindow window(sf::VideoMode(data["windows"]["width"], data["windows"]["height"]), "SFML works!");
 	window.setFramerateLimit(60.f);
 	
-	Entity  character =  myWorld->addEntity(b2Vec2(1, 2), textureList["slime"], b2_dynamicBody);
-	
+	// Creating playable character
+	Entity character = myWorld->addEntity(b2Vec2(1, 2), textureList["slime"], b2_dynamicBody);
 	
 	while (window.isOpen())
 	{
 		myWorld->step();
-		sf::Event event;
-		sf::Vector2f delta_move;
-		
+		sf::Event event;		
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
 			if (event.type == sf::Event::KeyPressed)
-			{				
+			{
 				character.Keyboard(event.key.code);
 			}
 		}
 		
-
-		
+		// Display manager
 		window.clear();
-		
 		myWorld->draw(window);
-		
 		window.display();
 	}
 

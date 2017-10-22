@@ -32,7 +32,7 @@ Entity World::addEntity(b2Vec2 position, sf::Texture* texture, b2BodyType bodyTy
 }
 
 
-bool World::createWorldTiles(json mapData, std::map<std::string, sf::Texture*>& textureList) 
+void World::createWorldTiles(json mapData, std::map<std::string, sf::Texture*>& textureList) 
 {
 	for (int height = 0; height < mapData.size(); height++)
 	{
@@ -45,7 +45,6 @@ bool World::createWorldTiles(json mapData, std::map<std::string, sf::Texture*>& 
 			}
 		}
 	}
-	return true;
 }
 
 b2Vec2 World::pixel2meter(sf::Vector2f vect) 

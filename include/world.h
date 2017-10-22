@@ -9,17 +9,18 @@
 #include "json.hpp"
 
 #include "entityManager.h"
+#include "entity.h"
 
 using json = nlohmann::json;
+
+class EntityManager;
+class Entity;
 
 enum TilesTypes
 {
 	AIR,
 	GROUND
 };
-
-class EntityManager;
-class Entity;
 
 class World 
 {
@@ -38,7 +39,7 @@ public:
 	void step();
 	void draw(sf::RenderWindow&);
 	Entity addEntity(b2Vec2, sf::Texture*, b2BodyType = b2_staticBody);
-	bool createWorldTiles(json mapData, std::map<std::string, sf::Texture*>& textureList);
+	void createWorldTiles(json mapData, std::map<std::string, sf::Texture*>& textureList);
 
 	static b2Vec2 pixel2meter(sf::Vector2f);
 	static sf::Vector2f meter2pixel(b2Vec2);

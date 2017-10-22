@@ -23,9 +23,8 @@ Entity::Entity(b2Vec2 position, sf::Texture * texture, b2BodyType bodyType, b2Wo
 	b2Fixture* footSensorFixture = body->CreateFixture(&myFixtureDef);
 	footSensorFixture->SetUserData((void*)3);
 
-	
 	sprite.setTexture(*texture);
-	sprite.setPosition(body->GetPosition().x, body->GetPosition().y);
+	sprite.setPosition(World::meter2pixel(body->GetPosition()));
 }
 
 Entity::~Entity()
@@ -36,11 +35,6 @@ void Entity::draw(sf::RenderWindow & window)
 {
 	sprite.setPosition(World::meter2pixel(body->GetPosition()));
 	window.draw(sprite);
-}
-
-void Entity::move(double deltaX, double deltaY)
-{
-	
 }
 
 b2Body * Entity::getBody()
@@ -58,9 +52,9 @@ sf::Sprite * Entity::getSprite()
 	return &this->sprite;
 }
 
+// User input
 void Entity::Keyboard(sf::Keyboard::Key code)
 {
-
 	b2Vec2 vel = body->GetLinearVelocity();
 	switch (code)
 	{
@@ -68,7 +62,6 @@ void Entity::Keyboard(sf::Keyboard::Key code)
 		vel.x += -5;
 		body->SetLinearVelocity(vel);
 		break;
-
 	
 	case sf::Keyboard::D: //move right
 		vel.x += 5;
@@ -78,13 +71,11 @@ void Entity::Keyboard(sf::Keyboard::Key code)
 	case sf::Keyboard::W:
 	
 		if (vel.y==0)
-	
-		vel.y -= 8;
+			vel.y -= 8;
+
 		body->SetLinearVelocity(vel);
-		
-	break;
+		break;
 	}
-	body->SetLinearVelocity(vel);
 }
 
 

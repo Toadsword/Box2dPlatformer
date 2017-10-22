@@ -5,10 +5,10 @@
 #define FOLDER_IMG "data/img/"
 
 // - loadTexture
-// Description : Charge une texture donnée en paramètre dans la mémoire
+// Description : Load a texture in the heap
 // Args :
-//		imageName : Nom de l'image
-// Return : Le pointeur de la texture
+//		imageName : Image name
+// Return : Texture's pointer
 sf::Texture* loadTexture(std::string imageName)
 {
 	sf::Texture* texture = new sf::Texture();
@@ -20,9 +20,9 @@ sf::Texture* loadTexture(std::string imageName)
 }
 
 // - loadAllTextures
-// Description : Charge toutes les textures voulus et le stock dans une liste de textures
+// Description : Load all textures that will be used
 // Args :
-//		imageName : textureList Liste de textures à agrémenter
+//		textureList : List of textures
 void loadAllTextures(std::map<std::string, sf::Texture*>& textureList)
 {
 	textureList["grass"] = loadTexture("grass.png");

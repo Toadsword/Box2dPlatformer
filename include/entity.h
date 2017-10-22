@@ -5,11 +5,12 @@
 #include <Box2D/Box2D.h>
 
 #include "world.h"
-enum MOVESTATE {
+enum MoveState {
 	
 	LEFT,
 	RIGHT
 };
+
 class Entity
 {
 protected:
@@ -17,8 +18,7 @@ protected:
 	sf::Sprite sprite;
 	b2Body* body;
 	b2BodyType bodyType;
-	MOVESTATE movestate;
-	int numcontact;
+	MoveState movestate;
 	
 public:
 	Entity(b2Vec2, sf::Texture*, b2BodyType, b2World&);
@@ -30,18 +30,10 @@ public:
 	b2BodyType getBodyType();
 	sf::Sprite* getSprite();
 
-	void beginContact(b2Contact* contact);
-	void endContact(b2Contact* contact);
+	
 	void Keyboard(sf::Keyboard::Key code);
-	void setLinearVelocity(b2Vec2);
-	void applyForce(b2Vec2);
-	void applyLinearImpulse(b2Vec2);
-	b2Vec2 getLinearVelocity();
+	
+	
 };
-//class MyContactListener 
-//{
-//	
-//public:
-//	¨void begincontact()
-//};
+
 #endif //! ENTITY_H

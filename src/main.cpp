@@ -46,10 +46,10 @@ int main()
 
 	sf::RenderWindow window(sf::VideoMode(data["windows"]["width"], data["windows"]["height"]), "SFML works!");
 	window.setFramerateLimit(60.f);
-	char* key;
+	
 	Entity  character =  myWorld->addEntity(b2Vec2(1, 2), textureList["slime"], b2_dynamicBody);
 	
-	float speed = 5.0f;
+	
 	while (window.isOpen())
 	{
 		myWorld->step();
@@ -65,6 +65,7 @@ int main()
 				character.Keyboard(event.key.code);
 			}
 		}
+		
 
 		
 		window.clear();

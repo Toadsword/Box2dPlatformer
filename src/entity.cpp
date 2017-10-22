@@ -69,63 +69,22 @@ void Entity::Keyboard(sf::Keyboard::Key code)
 		body->SetLinearVelocity(vel);
 		break;
 
-	//case 's': //stop
-	//	moveState = MS_STOP;
+	
 	case sf::Keyboard::D: //move right
 		vel.x += 5;
 		body->SetLinearVelocity(vel);
 		break;
 	
 	case sf::Keyboard::W:
-	// utilise l'impulse pour sauter
-		//to change velocity by 10
-		vel.y -= 10;
+	
+		if (vel.y==0)
+	
+		vel.y -= 8;
 		body->SetLinearVelocity(vel);
+		
 	break;
 	}
 	body->SetLinearVelocity(vel);
 }
 
-// permet de faire en sorte que le body ne peut que sauter sur un sol
-void Entity::beginContact(b2Contact* contact)
-{
-	//check if fixture A was the foot sensor
-	void* fixtureUserData = contact->GetFixtureA()->GetUserData();
-	if ((int)fixtureUserData == 3)
-		numcontact++;
-	//check if fixture B was the foot sensor
-	fixtureUserData = contact->GetFixtureB()->GetUserData();
-	if ((int)fixtureUserData == 3)
-		numcontact++;
-}
 
-void Entity::endContact(b2Contact* contact)
-{
-	//check if fixture A was the foot sensor
-	void* fixtureUserData = contact->GetFixtureA()->GetUserData();
-	if ((int)fixtureUserData == 3)
-		numcontact--;
-	//check if fixture B was the foot sensor
-	fixtureUserData = contact->GetFixtureB()->GetUserData();
-	if ((int)fixtureUserData == 3)
-		numcontact--;
-}
-void Entity::setLinearVelocity(b2Vec2 vect)
-{
-	body->SetLinearVelocity(vect);
-}
-
-void Entity::applyForce(b2Vec2 vect)
-{
-	body->ApplyForce(vect, body->GetWorldCenter(), true);
-}
-
-void Entity::applyLinearImpulse(b2Vec2 vect)
-{
-	body->ApplyLinearImpulse(vect, body->GetWorldCenter(), true);
-}
-
-b2Vec2 Entity::getLinearVelocity()
-{
-	return this->body->GetLinearVelocity();
-}

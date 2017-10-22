@@ -12,7 +12,7 @@
 
 using json = nlohmann::json;
 
-enum TILES_TYPES
+enum TilesTypes
 {
 	AIR,
 	GROUND

@@ -40,6 +40,7 @@ void Entity::draw(sf::RenderWindow & window)
 
 void Entity::move(double deltaX, double deltaY)
 {
+	
 }
 
 b2Body * Entity::getBody()
@@ -57,24 +58,29 @@ sf::Sprite * Entity::getSprite()
 	return &this->sprite;
 }
 
-void Entity::Keyboard(unsigned char key)
+void Entity::Keyboard(sf::Keyboard::Key code)
 {
-	switch (key)
+	
+	switch (code)
 	{
-	case 'a': //move left
+	case sf::Keyboard::A: //move left
 		movestate = LEFT;
+		
 		break;
 
-
-	case 'd': //move right
+	//case 's': //stop
+	//	moveState = MS_STOP;
+	case sf::Keyboard::D: //move right
 		movestate = RIGHT;
+		
 		break;
 	
-	case 'w':
+	case sf::Keyboard::W:
 	// utilise l'impulse pour sauter
 		//to change velocity by 10
 		float impulse = body->GetMass() * 10;
 		body->ApplyLinearImpulse(b2Vec2(0, impulse), body->GetWorldCenter(),true);
+	
 	break;
 	}
 }

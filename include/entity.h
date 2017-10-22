@@ -32,7 +32,7 @@ public:
 
 	void beginContact(b2Contact* contact);
 	void endContact(b2Contact* contact);
-	void Keyboard(unsigned char key);
+	void Keyboard(sf::Keyboard::Key code);
 	void step();
 	void setLinearVelocity(b2Vec2);
 	void applyForce(b2Vec2);

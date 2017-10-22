@@ -19,6 +19,7 @@
 
 using json = nlohmann::json;
 
+
 int main()
 {
 	// Reading the json file
@@ -45,13 +46,15 @@ int main()
 
 	sf::RenderWindow window(sf::VideoMode(data["windows"]["width"], data["windows"]["height"]), "SFML works!");
 	window.setFramerateLimit(60.f);
-	unsigned char key = 'a';
+	char* key;
 	Entity  character =  myWorld->addEntity(b2Vec2(1, 2), textureList["slime"], b2_dynamicBody);
+	myWorld->addEntity(b2Vec2(1, 2), textureList["slime"], b2_dynamicBody)= character;
 	float speed = 5.0f;
 	while (window.isOpen())
 	{
 		myWorld->step();
 		sf::Event event;
+		sf::Vector2f delta_move;
 		
 		while (window.pollEvent(event))
 		{
@@ -59,7 +62,8 @@ int main()
 				window.close();
 			if (event.type == sf::Event::KeyPressed)
 			{
-				character.Keyboard();
+				
+				character.Keyboard(event.key.code);
 			}
 		}
 

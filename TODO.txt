@@ -1,11 +1,11 @@
 --Box2d--
->Duncan< Créer les plateformes
+>DuncanOK< Créer les plateformes
 >thib<Créer le carré qui saute
->Duncan< Créer une gestion des objets (classe gérant plateforme et carré)
+>DuncanOK< Créer une gestion des objets (classe gérant plateforme et carré)
 
 -- Mechaniques --
-Gérer la gravité
-Gérer les collisions entre plateforme et carré
+>DuncanOk< Gérer la gravité
+>DuncanOK< Gérer les collisions entre plateforme et carré
 Gère le saut et la gravité
 Faire en sorte que le carré ne saute pas quand il est en l'air
 Gestion des inputs (déplacement du carré)

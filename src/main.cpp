@@ -44,10 +44,11 @@ int main()
 
 	sf::RenderWindow window(sf::VideoMode(data["windows"]["width"], data["windows"]["height"]), "SFML works!");
 	window.setFramerateLimit(60.f);
-	
+	sf::RectangleShape square(sf::Vector2f(50, 50));
+	square.setFillColor(sf::Color::Blue);
 
 	myWorld->addEntity(b2Vec2(1, 2), textureList["slime"], b2_dynamicBody);
-	
+	float speed = 5.0f;
 	while (window.isOpen())
 	{
 		myWorld->step();
@@ -70,8 +71,9 @@ int main()
 			}
 		}
 
+		square.setPosition(square.getPosition() + speed*square_move);
 		window.clear();
-
+		window.draw(square);
 		myWorld->draw(window);
 		
 		window.display();

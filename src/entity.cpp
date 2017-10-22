@@ -79,8 +79,8 @@ void Entity::Keyboard(sf::Keyboard::Key code)
 	case sf::Keyboard::W:
 	// utilise l'impulse pour sauter
 		//to change velocity by 10
-		float impulse = body->GetMass() * 10;
-		this->applyLinearImpulse(b2Vec2(0, impulse));
+		vel.y -= 10;
+		body->SetLinearVelocity(vel);
 	break;
 	}
 	body->SetLinearVelocity(vel);

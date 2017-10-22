@@ -40,7 +40,7 @@ bool World::createWorldTiles(json mapData, std::map<std::string, sf::Texture*>& 
 		{
 			if (mapData[height][width] == GROUND)
 			{
-				b2Vec2 position = this->pixel2meter(sf::Vector2f(width, height));
+				b2Vec2 position = b2Vec2(width, height);
 				this->addEntity(position, textureList["grass"], b2_staticBody);
 			}
 		}

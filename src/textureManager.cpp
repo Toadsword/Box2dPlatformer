@@ -26,4 +26,5 @@ sf::Texture* loadTexture(std::string imageName)
 void loadAllTextures(std::map<std::string, sf::Texture*>& textureList)
 {
 	textureList["grass"] = loadTexture("grass.png");
+	textureList["slime"] = loadTexture("slime.png");
 }

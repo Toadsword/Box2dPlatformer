@@ -23,9 +23,7 @@ Entity::~Entity()
 
 void Entity::draw(sf::RenderWindow & window)
 {
-	if(this->bodyType == b2_dynamicBody)
-		sprite.setPosition(this->getBody()->GetPosition().x, this->getBody()->GetPosition().y);
-
+	sprite.setPosition(World::meter2pixel(body->GetPosition()));
 	window.draw(sprite);
 }
 
@@ -46,4 +44,24 @@ b2BodyType Entity::getBodyType()
 sf::Sprite * Entity::getSprite()
 {
 	return &this->sprite;
+}
+
+void Entity::setLinearVelocity(b2Vec2 vect)
+{
+	body->SetLinearVelocity(vect);
+}
+
+void Entity::applyForce(b2Vec2 vect)
+{
+	body->ApplyForce(vect, body->GetWorldCenter(), true);
+}
+
+void Entity::applyLinearImpulse(b2Vec2 vect)
+{
+	body->ApplyLinearImpulse(vect, body->GetWorldCenter(), true);
+}
+
+b2Vec2 Entity::getLinearVelocity()
+{
+	return this->body->GetLinearVelocity();
 }

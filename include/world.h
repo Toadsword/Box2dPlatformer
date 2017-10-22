@@ -2,6 +2,7 @@
 #define WORLD_H
 
 #include <Box2D\Box2D.h>
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <fstream>
 
@@ -17,7 +18,10 @@ enum TILES_TYPES
 	GROUND
 };
 
-class World {
+class EntityManager;
+
+class World 
+{
 private:
 	b2World* world;
 	EntityManager* entitiesManager;
@@ -35,8 +39,8 @@ public:
 	void addEntity(b2Vec2, sf::Texture*, b2BodyType = b2_staticBody);
 	bool createWorldTiles(json mapData, std::map<std::string, sf::Texture*>& textureList);
 
-	b2Vec2 pixel2meter(sf::Vector2f);
-	sf::Vector2f meter2pixel(b2Vec2);
+	static b2Vec2 pixel2meter(sf::Vector2f);
+	static sf::Vector2f meter2pixel(b2Vec2);
 	void setScale(const float);
 };
 

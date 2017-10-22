@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
 
+#include "world.h"
+
 class Entity
 {
 private:
@@ -21,5 +23,10 @@ public:
 	b2Body* getBody();
 	b2BodyType getBodyType();
 	sf::Sprite* getSprite();
+
+	void setLinearVelocity(b2Vec2);
+	void applyForce(b2Vec2);
+	void applyLinearImpulse(b2Vec2);
+	b2Vec2 getLinearVelocity();
 };
 #endif //! ENTITY_H

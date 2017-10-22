@@ -12,7 +12,7 @@
 #include "entityManager.h"
 #include "textureManager.h"
 
-#define PIXEL_METER_RATIO 64
+#define PIXEL_METER_RATIO 1.f/64.f
 #define WORLD_TIME_STEP 1.f / 60.0f
 #define WORLD_VELOCITY_IT 8
 #define WORLD_POSITION_IT 3
@@ -32,7 +32,7 @@ int main()
 		system("pause");
 		return EXIT_FAILURE;
 	}
-
+	
 	std::map<std::string, sf::Texture*> textureList;
 	loadAllTextures(textureList);
 
@@ -45,30 +45,37 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(data["windows"]["width"], data["windows"]["height"]), "SFML works!");
 	window.setFramerateLimit(60.f);
 	
+
+	myWorld->addEntity(b2Vec2(1, 2), textureList["slime"], b2_dynamicBody);
+	
 	while (window.isOpen())
 	{
 		myWorld->step();
 		sf::Event event;
+		sf::Vector2f square_move;
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
 			if (event.type == sf::Event::KeyPressed)
 			{
-				if (event.key.code == sf::Keyboard::Space)
-				{
-					std::cout << "User pressed SPACE\n";
-				}
+				if (event.key.code == sf::Keyboard::A)
+					square_move.x -= 1.0f;
+
+				if (event.key.code == sf::Keyboard::D)
+					square_move.x += 1.0f;
+
+				if (event.key.code == sf::Keyboard::W)
+					square_move.y -= 1.0f;
 			}
 		}
-		
+
 		window.clear();
 
 		myWorld->draw(window);
 		
 		window.display();
 	}
-	delete myWorld;
 
 	return 0;
 }

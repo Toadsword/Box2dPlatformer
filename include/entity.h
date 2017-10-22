@@ -1,27 +1,25 @@
-#ifndef OBJECT_MANAGER
-#define OBJECT_MANAGER
+#ifndef ENTITY_H
+#define ENTITY_H
 
 #include <SFML/Graphics.hpp>
 #include <Box2D/Box2D.h>
-#include <iostream>
 
-class objectManager
+class Entity
 {
 private:
-	sf::Vector2f position;
 	sf::Texture* texture;
 	sf::Sprite sprite;
 	b2Body* body;
+	b2BodyType bodyType;
 
 public:
-	objectManager(sf::Vector2f, sf::Texture*, b2Body*);
-	~objectManager();
+	Entity(b2Vec2, sf::Texture*, b2BodyType, b2World&);
+	~Entity();
 	void draw(sf::RenderWindow&);
 	void move(double deltaX, double deltaY);
 
 	b2Body* getBody();
+	b2BodyType getBodyType();
 	sf::Sprite* getSprite();
-
 };
-
-#endif
+#endif //! ENTITY_H

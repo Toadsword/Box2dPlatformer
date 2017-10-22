@@ -79,6 +79,19 @@ void Entity::Keyboard(unsigned char key)
 	}
 }
 
+void Entity::step()
+{
+	b2Vec2 vel = body->GetLinearVelocity();
+	switch (movestate)
+	{
+	case LEFT:  vel.x = -5; break;
+	
+	case RIGHT: vel.x = 5; break;
+	}
+	body->SetLinearVelocity(vel);
+
+}
+
 // permet de faire en sorte que le body ne peut que sauter sur un sol
 void Entity::beginContact(b2Contact* contact)
 {

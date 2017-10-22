@@ -60,42 +60,30 @@ sf::Sprite * Entity::getSprite()
 
 void Entity::Keyboard(sf::Keyboard::Key code)
 {
-	
+
+	b2Vec2 vel = body->GetLinearVelocity();
 	switch (code)
 	{
 	case sf::Keyboard::A: //move left
-		movestate = LEFT;
-		
+		vel.x += -5;
+		body->SetLinearVelocity(vel);
 		break;
 
 	//case 's': //stop
 	//	moveState = MS_STOP;
 	case sf::Keyboard::D: //move right
-		movestate = RIGHT;
-		
+		vel.x += 5;
+		body->SetLinearVelocity(vel);
 		break;
 	
 	case sf::Keyboard::W:
 	// utilise l'impulse pour sauter
 		//to change velocity by 10
 		float impulse = body->GetMass() * 10;
-		body->ApplyLinearImpulse(b2Vec2(0, impulse), body->GetWorldCenter(),true);
-	
+		this->applyLinearImpulse(b2Vec2(0, impulse));
 	break;
 	}
-}
-
-void Entity::step()
-{
-	b2Vec2 vel = body->GetLinearVelocity();
-	switch (movestate)
-	{
-	case LEFT:  vel.x = -5; break;
-	
-	case RIGHT: vel.x = 5; break;
-	}
 	body->SetLinearVelocity(vel);
-
 }
 
 // permet de faire en sorte que le body ne peut que sauter sur un sol

@@ -20,6 +20,12 @@ enum TILES_TYPES
 	AIR,
 	GROUND
 };
+enum MOVE_STATE
+{
+	LEFT,
+	RIGHT
+	//UP
+};
 
 // - meter2pixel
 // Description : Converti les pixels de SFML en mètres de Box2d
@@ -115,6 +121,8 @@ void displayMap(sf::RenderWindow& window, std::list<objectManager*>& map)
 		(*it)->draw(window);	
 }
 
+
+
 int main()
 {
 	// Reading the json file
@@ -128,7 +136,7 @@ int main()
 		system("pause");
 		return EXIT_FAILURE;
 	}
-
+	//unsigned char key;
 	std::map<std::string, sf::Texture*> textureList;
 	loadAllTextures(textureList);
 
@@ -138,7 +146,7 @@ int main()
 
 	std::list<objectManager*> worldMap;
 	createWorldTiles(myWorld, data["level"], worldMap, textureList);
-
+	
 	sf::RenderWindow window(sf::VideoMode(data["windows"]["width"], data["windows"]["height"]), "SFML works!");
 	window.setFramerateLimit(60.f);
 	sf::RectangleShape square (sf::Vector2f(50,50));
@@ -148,8 +156,10 @@ int main()
 	myBodyDef.type = b2_dynamicBody; //this will be a dynamic body
 	myBodyDef.position.Set(10, 0); //set the starting position
 	b2Body* dynamicBody = myWorld->CreateBody(&myBodyDef);
+	
 	b2PolygonShape shape;
 	shape.SetAsBox(0.7, 0.7);
+	
 	b2FixtureDef boxFixtureDef;
 	boxFixtureDef.shape = &shape;
 	boxFixtureDef.density = 1;
@@ -164,6 +174,7 @@ int main()
 		std::cout << (*it)->getSprite()->getPosition().x << " " << (*it)->getSprite()->getPosition().y << "\n";
 	}
 
+	//keyboard(key);
 	float speed = 5.0f;
 	while (window.isOpen())
 	{
@@ -181,7 +192,24 @@ int main()
 				}
 			}
 		}
+		sf::Vector2f square_move;
 		
+		//manage input pour bouger le carre SFML
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			square_move.x -= 1.0f;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			square_move.x += 1.0f;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		{
+			square_move.y -= 1.0f;
+		}
+		
+
+		square.setPosition(square.getPosition() + speed*square_move);
 
 		square.setPosition(dynamicBody->GetPosition().x, dynamicBody->GetPosition().y);
 

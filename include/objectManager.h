@@ -18,6 +18,7 @@ public:
 	~objectManager();
 	void draw(sf::RenderWindow&);
 	void move(double deltaX, double deltaY);
+	void keyboard(unsigned char key);
 
 	b2Body* getBody();
 	sf::Sprite* getSprite();

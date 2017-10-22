@@ -1,5 +1,10 @@
 #include "objectManager.h"
-
+enum MOVE_STATE
+{
+	LEFT,
+	RIGHT
+	//UP
+};
 objectManager::objectManager(sf::Vector2f position, sf::Texture* texture, b2Body* body) : position(position), texture(texture), body(body)
 {
 	sprite.setTexture(*texture);
@@ -29,4 +34,31 @@ b2Body* objectManager::getBody()
 sf::Sprite* objectManager::getSprite()
 {
 	return &this->sprite;
+}
+//  - keyboard
+// Description : permet de bouger le corps physique
+void objectManager::keyboard(unsigned char key)
+{
+	MOVE_STATE move_state;
+
+	switch (key)
+	{
+	case 'a': //move left
+		move_state = LEFT;
+		break;
+
+
+	case 'd': //move right
+		move_state = RIGHT;
+		break;
+
+	case 'w': //jump
+
+		b2Vec2 vel = body->GetLinearVelocity();
+		vel.y = 10;
+		body->SetLinearVelocity(vel);
+		break;
+	}
+
+
 }

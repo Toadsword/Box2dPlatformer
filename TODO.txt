@@ -1,6 +1,6 @@
 --Box2d--
 >Duncan< Créer les plateformes
-Créer le carré qui saute
+>thib<Créer le carré qui saute
 >Duncan< Créer une gestion des objets (classe gérant plateforme et carré)
 
 -- Mechaniques --

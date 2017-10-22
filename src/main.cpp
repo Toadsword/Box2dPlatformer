@@ -48,7 +48,7 @@ int main()
 	window.setFramerateLimit(60.f);
 	char* key;
 	Entity  character =  myWorld->addEntity(b2Vec2(1, 2), textureList["slime"], b2_dynamicBody);
-	myWorld->addEntity(b2Vec2(1, 2), textureList["slime"], b2_dynamicBody)= character;
+	
 	float speed = 5.0f;
 	while (window.isOpen())
 	{

@@ -49,12 +49,12 @@ void World::createWorldTiles(json mapData, std::map<std::string, sf::Texture*>& 
 
 b2Vec2 World::pixel2meter(sf::Vector2f vect) 
 {
-	return b2Vec2(vect.x * scale, vect.y * scale);
+	return b2Vec2(vect.x / scale, vect.y / scale);
 }
 
 sf::Vector2f World::meter2pixel(b2Vec2 vect) 
 {
-	return sf::Vector2f(vect.x / scale, vect.y / scale);
+	return sf::Vector2f(vect.x * scale, vect.y * scale);
 }
 
 void World::setScale(const float newScale) 

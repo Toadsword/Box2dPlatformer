@@ -6,22 +6,19 @@ Entity::Entity(b2Vec2 position, sf::Texture * texture, b2BodyType bodyType, b2Wo
 	b2BodyDef bodyDef;
 	bodyDef.type = bodyType;
 	bodyDef.position = position;
+	bodyDef.fixedRotation = true;
 	body = world.CreateBody(&bodyDef);
 
 	// main Fixture
 	b2PolygonShape fixtureDef;
-	fixtureDef.SetAsBox(1.f / 2.f, 1.f / 2.f);
+	// one meter, divided by 2 because it takes the center of the box for the base, so he guesses we give him half of it
+	fixtureDef.SetAsBox(1.f / 2.f, 1.f / 2.f); 
 	body->CreateFixture(&fixtureDef, 0.f);
 
 	//fixture definition
 	b2FixtureDef myFixtureDef;
 	myFixtureDef.shape = &fixtureDef;
 	myFixtureDef.density = 1;
-
-	//foot sensor fixture
-    myFixtureDef.isSensor = true;
-	b2Fixture* footSensorFixture = body->CreateFixture(&myFixtureDef);
-	footSensorFixture->SetUserData((void*)3);
 
 	sprite.setTexture(*texture);
 	sprite.setPosition(World::meter2pixel(body->GetPosition()));
@@ -33,7 +30,8 @@ Entity::~Entity()
 
 void Entity::draw(sf::RenderWindow & window)
 {
-	sprite.setPosition(World::meter2pixel(body->GetPosition()));
+	if(this->bodyType == b2_dynamicBody)
+		sprite.setPosition(World::meter2pixel(body->GetPosition()));
 	window.draw(sprite);
 }
 
@@ -51,31 +49,3 @@ sf::Sprite * Entity::getSprite()
 {
 	return &this->sprite;
 }
-
-// User input
-void Entity::Keyboard(sf::Keyboard::Key code)
-{
-	b2Vec2 vel = body->GetLinearVelocity();
-	switch (code)
-	{
-	case sf::Keyboard::A: //move left
-		vel.x += -5;
-		body->SetLinearVelocity(vel);
-		break;
-	
-	case sf::Keyboard::D: //move right
-		vel.x += 5;
-		body->SetLinearVelocity(vel);
-		break;
-	
-	case sf::Keyboard::W:
-	
-		if (vel.y==0)
-			vel.y -= 8;
-
-		body->SetLinearVelocity(vel);
-		break;
-	}
-}
-
-

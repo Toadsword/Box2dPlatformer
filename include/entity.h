@@ -6,14 +6,25 @@
 
 #include "world.h"
 
+enum moveState 
+{
+	MS_STOP,
+	MS_LEFT,
+	MS_RIGHT
+};
+
 class Entity
 {
 protected:
 	sf::Texture* texture;
 	sf::Sprite sprite;
 	b2Body* body;
-	b2BodyType bodyType;	
+	b2BodyType bodyType;
+
 public:
+	moveState moveState;
+
+
 	Entity(b2Vec2, sf::Texture*, b2BodyType, b2World&);
 	~Entity();
 	void draw(sf::RenderWindow&);
@@ -21,8 +32,6 @@ public:
 	b2Body* getBody();
 	b2BodyType getBodyType();
 	sf::Sprite* getSprite();
-
-	void Keyboard(sf::Keyboard::Key code);
 };
 
 #endif //! ENTITY_H

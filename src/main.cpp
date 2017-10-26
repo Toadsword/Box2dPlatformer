@@ -12,7 +12,7 @@
 #include "entityManager.h"
 #include "textureManager.h"
 
-#define PIXEL_METER_RATIO 1.f / 64.f
+#define PIXEL_METER_RATIO 64.f
 #define WORLD_TIME_STEP 1.f / 60.0f
 #define WORLD_VELOCITY_IT 8
 #define WORLD_POSITION_IT 3
@@ -51,7 +51,7 @@ int main()
 	
 	while (window.isOpen())
 	{
-		myWorld->step();
+		b2Vec2 vel = character.getBody()->GetLinearVelocity();
 		sf::Event event;		
 		while (window.pollEvent(event))
 		{
@@ -59,10 +59,31 @@ int main()
 				window.close();
 			if (event.type == sf::Event::KeyPressed)
 			{
-				character.Keyboard(event.key.code);
+				// User input
+				switch (event.key.code)
+				{
+				case sf::Keyboard::Left:
+					character.getBody()->ApplyLinearImpulse(b2Vec2(5, 5), b2Vec2(5, 5), true);
+					vel.x = -5; 
+					break;
+
+				case sf::Keyboard::Right:
+					character.getBody()->ApplyLinearImpulse(b2Vec2(-5, -5), b2Vec2(-5, -5), true);
+					vel.x = 5;
+					break;
+				case sf::Keyboard::Down:
+					vel.x = 0;
+					break;
+				case sf::Keyboard::Up:
+					if (vel.y == 0)
+						vel.y -= 8;
+					break;
+				}
 			}
 		}
-		
+		character.getBody()->ApplyLinearImpulse(b2Vec2(1, 1), b2Vec2(1, 1), true);
+		character.getBody()->SetLinearVelocity(vel);
+		myWorld->step();
 		// Display manager
 		window.clear();
 		myWorld->draw(window);

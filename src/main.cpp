@@ -51,37 +51,29 @@ int main()
 	
 	while (window.isOpen())
 	{
+		sf::Event event;
 		b2Vec2 vel = character.getBody()->GetLinearVelocity();
-		sf::Event event;		
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
-			if (event.type == sf::Event::KeyPressed)
-			{
-				// User input
-				switch (event.key.code)
-				{
-				case sf::Keyboard::Left:
-					character.getBody()->ApplyLinearImpulse(b2Vec2(5, 5), b2Vec2(5, 5), true);
-					vel.x = -5; 
-					break;
-
-				case sf::Keyboard::Right:
-					character.getBody()->ApplyLinearImpulse(b2Vec2(-5, -5), b2Vec2(-5, -5), true);
-					vel.x = 5;
-					break;
-				case sf::Keyboard::Down:
-					vel.x = 0;
-					break;
-				case sf::Keyboard::Up:
-					if (vel.y == 0)
-						vel.y -= 8;
-					break;
-				}
-			}
 		}
-		character.getBody()->ApplyLinearImpulse(b2Vec2(1, 1), b2Vec2(1, 1), true);
+
+		vel.x = 0.f;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			vel.x -= 3.f;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			vel.x += 3.f;
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		{
+			if (vel.y == 0)
+				vel.y -= 8;
+		}
+
 		character.getBody()->SetLinearVelocity(vel);
 		myWorld->step();
 		// Display manager

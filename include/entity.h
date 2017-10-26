@@ -6,13 +6,6 @@
 
 #include "world.h"
 
-enum moveState 
-{
-	MS_STOP,
-	MS_LEFT,
-	MS_RIGHT
-};
-
 class Entity
 {
 protected:
@@ -22,9 +15,6 @@ protected:
 	b2BodyType bodyType;
 
 public:
-	moveState moveState;
-
-
 	Entity(b2Vec2, sf::Texture*, b2BodyType, b2World&);
 	~Entity();
 	void draw(sf::RenderWindow&);
